@@ -20,6 +20,7 @@ export interface LinearProps {
   highlights: Highlight[];
   inputRef: InputRefFunc;
   lineHeight: number;
+  onAnnotationStartHeightsCalculated: (annotationStartHeights: { [key: string]: number }) => void;
   onUnmount: (id: string) => void;
   search: NameRange[];
   seq: string;
@@ -67,6 +68,7 @@ export default class Linear extends React.Component<LinearProps> {
       elementHeight,
       highlights,
       lineHeight,
+      onAnnotationStartHeightsCalculated,
       onUnmount,
       search,
       seq,
@@ -112,6 +114,22 @@ export default class Linear extends React.Component<LinearProps> {
       bpsPerBlock,
       arrSize
     );
+
+    if (typeof onAnnotationStartHeightsCalculated === "function") {
+      const annotationStartHeights = annotationRows.reduce((acc, annots, idx) => {
+        const startHeight = blockHeights.slice(0, idx + 1).reduce((sum, height) => sum + height, 0);
+        annots.forEach(a => {
+          const annotName = a[0].name;
+          // only use the first instance of the annotation
+          if (!(annotName in acc)) {
+            acc[annotName] = startHeight;
+          }
+        });
+        return acc;
+      }, {});
+
+      onAnnotationStartHeightsCalculated(annotationStartHeights);
+    }
 
     const searchRows: NameRange[][] =
       search && search.length ? createSingleRows(search, bpsPerBlock, arrSize) : new Array(arrSize).fill([]);
