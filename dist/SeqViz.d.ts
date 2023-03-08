@@ -53,6 +53,9 @@ export interface SeqVizProps {
     highlights?: HighlightProp[];
     /** the name of the sequence to show in the middle of the circular viewer */
     name?: string;
+    onAnnotationStartHeightsCalculated?: (annotationStartHeights: {
+        [key: string]: number;
+    }) => void;
     /** a callback that's executed on each change to the search parameters or sequence */
     onSearch?: (search: Range[]) => void;
     /** a callback that's executed on each click of the sequence viewer. Selection includes meta about the selected element */

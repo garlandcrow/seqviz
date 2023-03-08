@@ -84,6 +84,9 @@ export interface SeqVizProps {
   /** the name of the sequence to show in the middle of the circular viewer */
   name?: string;
 
+  // callback when the height for each annotation row is calculated
+  onAnnotationStartHeightsCalculated?: (annotationStartHeights: { [key: string]: number }) => void;
+
   /** a callback that's executed on each change to the search parameters or sequence */
   onSearch?: (search: Range[]) => void;
 

@@ -18,6 +18,9 @@ interface SeqViewerContainerProps {
     height: number;
     highlights: Highlight[];
     name: string;
+    onAnnotationStartHeightsCalculated?: (annotationStartHeights: {
+        [key: string]: number;
+    }) => void;
     onSelection: (selection: Selection) => void;
     rotateOnScroll: boolean;
     search: NameRange[];
