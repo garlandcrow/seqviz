@@ -2786,18 +2786,21 @@ var Linear = /** @class */ (function (_super) {
         }
         if (typeof onAnnotationStartHeightsCalculated === "function") {
             // console.debug("annotationRows", annotationRows);
-            var annotationStartHeights = annotationRows.reduce(function (acc, annots, idx) {
-                var startHeight = blockHeights.slice(0, idx + 1).reduce(function (sum, height) { return sum + height; }, 0);
-                annots.forEach(function (a) {
-                    var annotName = a[0].name;
-                    // only use the first instance of the annotation
-                    if (!(annotName in acc)) {
-                        acc[annotName] = startHeight;
-                    }
+            // console.debug("blockHeights", blockHeights);
+            var annotationStartHeights_1 = {};
+            var cumulativeHeight_1 = 0;
+            blockHeights.forEach(function (height, idx) {
+                annotationRows[idx].forEach(function (row) {
+                    row.forEach(function (_a) {
+                        var name = _a.name;
+                        if (!(name in annotationStartHeights_1)) {
+                            annotationStartHeights_1[name] = cumulativeHeight_1;
+                        }
+                    });
                 });
-                return acc;
-            }, {});
-            onAnnotationStartHeightsCalculated(annotationStartHeights);
+                cumulativeHeight_1 += height;
+            });
+            onAnnotationStartHeightsCalculated(annotationStartHeights_1);
         }
         var seqBlocks = [];
         var yDiff = 0;
