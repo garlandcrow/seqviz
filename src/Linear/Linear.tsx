@@ -20,7 +20,7 @@ export interface LinearProps {
   highlights: Highlight[];
   inputRef: InputRefFunc;
   lineHeight: number;
-  onAnnotationStartHeightsCalculated: (annotationStartHeights: { [key: string]: number }) => void;
+  onAnnotationStartHeightsCalculated?: (annotationStartHeights: { [key: string]: number }) => void;
   onUnmount: (id: string) => void;
   search: NameRange[];
   seq: string;
