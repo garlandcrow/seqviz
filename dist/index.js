@@ -2749,20 +2749,6 @@ var Linear = /** @class */ (function (_super) {
             return annotations;
         };
         var annotationRows = (0, elementsToRows_1.createMultiRows)((0, elementsToRows_1.stackElements)(vetAnnotations(annotations), seq.length), bpsPerBlock, arrSize);
-        if (typeof onAnnotationStartHeightsCalculated === "function") {
-            var annotationStartHeights = annotationRows.reduce(function (acc, annots, idx) {
-                var startHeight = blockHeights.slice(0, idx + 1).reduce(function (sum, height) { return sum + height; }, 0);
-                annots.forEach(function (a) {
-                    var annotName = a[0].name;
-                    // only use the first instance of the annotation
-                    if (!(annotName in acc)) {
-                        acc[annotName] = startHeight;
-                    }
-                });
-                return acc;
-            }, {});
-            onAnnotationStartHeightsCalculated(annotationStartHeights);
-        }
         var searchRows = search && search.length ? (0, elementsToRows_1.createSingleRows)(search, bpsPerBlock, arrSize) : new Array(arrSize).fill([]);
         var highlightRows = (0, elementsToRows_1.createSingleRows)(highlights, bpsPerBlock, arrSize);
         var translationRows = translations.length
@@ -2797,6 +2783,21 @@ var Linear = /** @class */ (function (_super) {
                 blockHeight += lineHeight; // space for cutsite name
             }
             blockHeights[i] = blockHeight;
+        }
+        if (typeof onAnnotationStartHeightsCalculated === "function") {
+            // console.debug("annotationRows", annotationRows);
+            var annotationStartHeights = annotationRows.reduce(function (acc, annots, idx) {
+                var startHeight = blockHeights.slice(0, idx + 1).reduce(function (sum, height) { return sum + height; }, 0);
+                annots.forEach(function (a) {
+                    var annotName = a[0].name;
+                    // only use the first instance of the annotation
+                    if (!(annotName in acc)) {
+                        acc[annotName] = startHeight;
+                    }
+                });
+                return acc;
+            }, {});
+            onAnnotationStartHeightsCalculated(annotationStartHeights);
         }
         var seqBlocks = [];
         var yDiff = 0;

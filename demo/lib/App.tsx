@@ -152,13 +152,16 @@ export default class App extends React.Component<any, AppState> {
                     enzymes={this.state.enzymes}
                     name={this.state.name}
                     search={this.state.search}
+                    selection={this.state.selection}
                     seq={this.state.seq}
                     showComplement={this.state.showComplement}
                     showIndex={this.state.showIndex}
                     translations={this.state.translations}
                     viewer={this.state.viewer as "linear" | "circular"}
                     zoom={{ linear: this.state.zoom }}
-                    selection={this.state.selection}
+                    onAnnotationStartHeightsCalculated={annotationStartHeights => {
+                      console.debug("annotationStartHeights", annotationStartHeights);
+                    }}
                     onSelection={selection => this.setState({ selection })}
                   />
                 )}
