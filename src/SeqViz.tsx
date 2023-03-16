@@ -118,9 +118,6 @@ export interface SeqVizProps {
   /** the type of the sequence. If this isn't passed, the type is guessed */
   seqType?: "dna" | "rna" | "aa";
 
-  /** the subsequence start/end to render */
-  subseq?: { start: number; end: number };
-
   /**
    * whether to render the annotation rows
    *
@@ -136,6 +133,9 @@ export interface SeqVizProps {
 
   /** extra style props to apply to the outermost div of SeqViz */
   style?: Record<string, unknown>;
+
+  /** the subsequence start/end to render */
+  subseq?: { end?: number; start: number };
 
   /** ranges of sequence that should have amino acid translations shown */
   translations?: { direction?: number; end: number; start: number }[];
