@@ -13,6 +13,7 @@ export interface LinearProps {
     elementHeight: number;
     handleMouseEvent: React.MouseEventHandler;
     highlights: Highlight[];
+    indexDisplayOffset?: number;
     inputRef: InputRefFunc;
     lineHeight: number;
     onAnnotationStartHeightsCalculated?: (annotationStartHeights: {

@@ -51,6 +51,8 @@ export interface SeqVizProps {
     highlightedRegions?: HighlightProp[];
     /** ranges of sequence to highlight on the viewer */
     highlights?: HighlightProp[];
+    /** the offset to add to the start the index of the viewer, default: 0 */
+    indexDisplayOffset?: number;
     /** the name of the sequence to show in the middle of the circular viewer */
     name?: string;
     onAnnotationStartHeightsCalculated?: (annotationStartHeights: {
@@ -80,11 +82,6 @@ export interface SeqVizProps {
     seq?: string;
     /** the type of the sequence. If this isn't passed, the type is guessed */
     seqType?: "dna" | "rna" | "aa";
-    /** the subsequence start/end to render */
-    subseq?: {
-        start: number;
-        end: number;
-    };
     /**
      * whether to render the annotation rows
      *
@@ -97,6 +94,7 @@ export interface SeqVizProps {
     showIndex?: boolean;
     /** extra style props to apply to the outermost div of SeqViz */
     style?: Record<string, unknown>;
+    /** the subsequence start/end to render */
     /** ranges of sequence that should have amino acid translations shown */
     translations?: {
         direction?: number;

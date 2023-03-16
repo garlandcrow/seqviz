@@ -18,6 +18,7 @@ export interface LinearProps {
   elementHeight: number;
   handleMouseEvent: React.MouseEventHandler;
   highlights: Highlight[];
+  indexDisplayOffset?: number;
   inputRef: InputRefFunc;
   lineHeight: number;
   onAnnotationStartHeightsCalculated?: (annotationStartHeights: { [key: string]: number }) => void;
@@ -62,39 +63,39 @@ export default class Linear extends React.Component<LinearProps> {
    */
   render() {
     const {
-      annotations: annotationsProp,
+      annotations,
       bpsPerBlock,
-      compSeq: compSeqProp,
+      compSeq,
       cutSites,
       elementHeight,
       highlights,
+      indexDisplayOffset,
       lineHeight,
       onAnnotationStartHeightsCalculated,
       onUnmount,
       search,
-      seq: seqProp,
+      seq,
       seqType,
       showComplement,
       showIndex,
       size,
-      subseq,
       translations,
       zoom,
     } = this.props;
 
-    let compSeq = compSeqProp;
-    let seq = seqProp;
-    let annotations = annotationsProp;
-    let displayIndexOffset = 0;
-    if (typeof subseq !== "undefined") {
-      const end = typeof subseq.end !== "undefined" ? subseq.end : seq.length;
-      seq = seq.slice(subseq.start, end);
-      compSeq = compSeq.slice(subseq.start, end);
-      annotations = annotations
-        .map(a => ({ ...a, end: a.end - subseq.start - 1, start: a.start - subseq.start - 1 }))
-        .filter(a => a.start <= seq.length);
-      displayIndexOffset = subseq.start;
-    }
+    // let compSeq = compSeqProp;
+    // let seq = seqProp;
+    // let annotations = annotationsProp;
+    // let displayIndexOffset = 0;
+    // if (typeof subseq !== "undefined") {
+    //   const end = typeof subseq.end !== "undefined" ? subseq.end : seq.length;
+    //   seq = seq.slice(subseq.start, end);
+    //   compSeq = compSeq.slice(subseq.start, end);
+    //   annotations = annotations
+    //     .map(a => ({ ...a, end: a.end - subseq.start - 1, start: a.start - subseq.start - 1 }))
+    //     .filter(a => a.start <= seq.length);
+    //   displayIndexOffset = subseq.start;
+    // }
 
     // un-official definition for being zoomed in. Being over 10 seems like a decent cut-off
     const zoomed = zoom.linear > 10;
@@ -210,13 +211,13 @@ export default class Linear extends React.Component<LinearProps> {
           charWidth={this.props.charWidth}
           compSeq={compSeqs[i]}
           cutSiteRows={cutSiteRows[i]}
-          displayIndexOffset={displayIndexOffset}
           elementHeight={elementHeight}
           firstBase={firstBase}
           fullSeq={seq}
           handleMouseEvent={this.props.handleMouseEvent}
           highlights={highlightRows[i]}
           id={ids[i]}
+          indexDisplayOffset={indexDisplayOffset}
           inputRef={this.props.inputRef}
           lineHeight={lineHeight}
           searchRows={searchRows[i]}

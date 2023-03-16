@@ -2682,17 +2682,6 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var React = __webpack_require__(1);
 var elementsToRows_1 = __webpack_require__(10);
@@ -2731,20 +2720,20 @@ var Linear = /** @class */ (function (_super) {
      * the second seqBlock, and "AG" to the third seqBlock.
      */
     Linear.prototype.render = function () {
-        var _a = this.props, annotationsProp = _a.annotations, bpsPerBlock = _a.bpsPerBlock, compSeqProp = _a.compSeq, cutSites = _a.cutSites, elementHeight = _a.elementHeight, highlights = _a.highlights, lineHeight = _a.lineHeight, onAnnotationStartHeightsCalculated = _a.onAnnotationStartHeightsCalculated, onUnmount = _a.onUnmount, search = _a.search, seqProp = _a.seq, seqType = _a.seqType, showComplement = _a.showComplement, showIndex = _a.showIndex, size = _a.size, subseq = _a.subseq, translations = _a.translations, zoom = _a.zoom;
-        var compSeq = compSeqProp;
-        var seq = seqProp;
-        var annotations = annotationsProp;
-        var displayIndexOffset = 0;
-        if (typeof subseq !== "undefined") {
-            var end = typeof subseq.end !== "undefined" ? subseq.end : seq.length;
-            seq = seq.slice(subseq.start, end);
-            compSeq = compSeq.slice(subseq.start, end);
-            annotations = annotations
-                .map(function (a) { return (__assign(__assign({}, a), { end: a.end - subseq.start, start: a.start - subseq.start })); })
-                .filter(function (a) { return a.start <= seq.length; });
-            displayIndexOffset = subseq.start;
-        }
+        var _a = this.props, annotations = _a.annotations, bpsPerBlock = _a.bpsPerBlock, compSeq = _a.compSeq, cutSites = _a.cutSites, elementHeight = _a.elementHeight, highlights = _a.highlights, indexDisplayOffset = _a.indexDisplayOffset, lineHeight = _a.lineHeight, onAnnotationStartHeightsCalculated = _a.onAnnotationStartHeightsCalculated, onUnmount = _a.onUnmount, search = _a.search, seq = _a.seq, seqType = _a.seqType, showComplement = _a.showComplement, showIndex = _a.showIndex, size = _a.size, translations = _a.translations, zoom = _a.zoom;
+        // let compSeq = compSeqProp;
+        // let seq = seqProp;
+        // let annotations = annotationsProp;
+        // let displayIndexOffset = 0;
+        // if (typeof subseq !== "undefined") {
+        //   const end = typeof subseq.end !== "undefined" ? subseq.end : seq.length;
+        //   seq = seq.slice(subseq.start, end);
+        //   compSeq = compSeq.slice(subseq.start, end);
+        //   annotations = annotations
+        //     .map(a => ({ ...a, end: a.end - subseq.start - 1, start: a.start - subseq.start - 1 }))
+        //     .filter(a => a.start <= seq.length);
+        //   displayIndexOffset = subseq.start;
+        // }
         // un-official definition for being zoomed in. Being over 10 seems like a decent cut-off
         var zoomed = zoom.linear > 10;
         // the actual fragmenting of the sequence into subblocks. generates all info that will be needed
@@ -2830,7 +2819,7 @@ var Linear = /** @class */ (function (_super) {
         var yDiff = 0;
         for (var i = 0; i < arrSize; i += 1) {
             var firstBase = i * bpsPerBlock;
-            seqBlocks.push(React.createElement(SeqBlock_1.default, { key: ids[i], annotationRows: annotationRows[i], blockHeight: blockHeights[i], bpColors: this.props.bpColors, bpsPerBlock: bpsPerBlock, charWidth: this.props.charWidth, compSeq: compSeqs[i], cutSiteRows: cutSiteRows[i], displayIndexOffset: displayIndexOffset, elementHeight: elementHeight, firstBase: firstBase, fullSeq: seq, handleMouseEvent: this.props.handleMouseEvent, highlights: highlightRows[i], id: ids[i], inputRef: this.props.inputRef, lineHeight: lineHeight, searchRows: searchRows[i], seq: seqs[i], seqFontSize: this.props.seqFontSize, seqType: seqType, showComplement: showComplement, showIndex: showIndex, size: size, translations: translationRows[i], y: yDiff, zoom: zoom, zoomed: zoomed, onUnmount: onUnmount }));
+            seqBlocks.push(React.createElement(SeqBlock_1.default, { key: ids[i], annotationRows: annotationRows[i], blockHeight: blockHeights[i], bpColors: this.props.bpColors, bpsPerBlock: bpsPerBlock, charWidth: this.props.charWidth, compSeq: compSeqs[i], cutSiteRows: cutSiteRows[i], elementHeight: elementHeight, firstBase: firstBase, fullSeq: seq, handleMouseEvent: this.props.handleMouseEvent, highlights: highlightRows[i], id: ids[i], indexDisplayOffset: indexDisplayOffset, inputRef: this.props.inputRef, lineHeight: lineHeight, searchRows: searchRows[i], seq: seqs[i], seqFontSize: this.props.seqFontSize, seqType: seqType, showComplement: showComplement, showIndex: showIndex, size: size, translations: translationRows[i], y: yDiff, zoom: zoom, zoomed: zoomed, onUnmount: onUnmount }));
             yDiff += blockHeights[i];
         }
         return (seqBlocks.length && (React.createElement(InfiniteScroll_1.default, { blockHeights: blockHeights, bpsPerBlock: bpsPerBlock, seqBlocks: seqBlocks, size: size, totalHeight: blockHeights.reduce(function (acc, h) { return acc + h; }, 0) })));
@@ -3618,7 +3607,7 @@ var SeqBlock = /** @class */ (function (_super) {
         return _this;
     }
     SeqBlock.prototype.render = function () {
-        var _a = this.props, annotationRows = _a.annotationRows, blockHeight = _a.blockHeight, bpsPerBlock = _a.bpsPerBlock, charWidth = _a.charWidth, compSeq = _a.compSeq, cutSiteRows = _a.cutSiteRows, displayIndexOffset = _a.displayIndexOffset, elementHeight = _a.elementHeight, firstBase = _a.firstBase, fullSeq = _a.fullSeq, handleMouseEvent = _a.handleMouseEvent, highlights = _a.highlights, id = _a.id, inputRef = _a.inputRef, lineHeight = _a.lineHeight, onUnmount = _a.onUnmount, searchRows = _a.searchRows, seq = _a.seq, seqFontSize = _a.seqFontSize, seqType = _a.seqType, showComplement = _a.showComplement, showIndex = _a.showIndex, size = _a.size, translations = _a.translations, zoom = _a.zoom, zoomed = _a.zoomed;
+        var _a = this.props, annotationRows = _a.annotationRows, blockHeight = _a.blockHeight, bpsPerBlock = _a.bpsPerBlock, charWidth = _a.charWidth, compSeq = _a.compSeq, cutSiteRows = _a.cutSiteRows, elementHeight = _a.elementHeight, firstBase = _a.firstBase, fullSeq = _a.fullSeq, handleMouseEvent = _a.handleMouseEvent, highlights = _a.highlights, id = _a.id, indexDisplayOffset = _a.indexDisplayOffset, inputRef = _a.inputRef, lineHeight = _a.lineHeight, onUnmount = _a.onUnmount, searchRows = _a.searchRows, seq = _a.seq, seqFontSize = _a.seqFontSize, seqType = _a.seqType, showComplement = _a.showComplement, showIndex = _a.showIndex, size = _a.size, translations = _a.translations, zoom = _a.zoom, zoomed = _a.zoomed;
         if (!size.width || !size.height)
             return null;
         var textProps = {
@@ -3663,7 +3652,7 @@ var SeqBlock = /** @class */ (function (_super) {
                 type: "SEQ",
                 viewer: "LINEAR",
             }), className: "la-vz-seqblock", cursor: "text", display: "block", height: blockHeight, id: id, width: size.width >= 0 ? size.width : 0, onMouseDown: handleMouseEvent, onMouseMove: handleMouseEvent, onMouseUp: handleMouseEvent },
-            showIndex && (React.createElement(Index_1.default, { charWidth: charWidth, displayIndexOffset: displayIndexOffset, findXAndWidth: this.findXAndWidth, firstBase: firstBase, lastBase: lastBase, seq: seq, seqType: seqType, showIndex: showIndex, size: size, yDiff: indexRowYDiff, zoom: zoom })),
+            showIndex && (React.createElement(Index_1.default, { charWidth: charWidth, findXAndWidth: this.findXAndWidth, firstBase: firstBase, indexDisplayOffset: indexDisplayOffset, lastBase: lastBase, seq: seq, seqType: seqType, showIndex: showIndex, size: size, yDiff: indexRowYDiff, zoom: zoom })),
             React.createElement(Selection_1.default.Block, { findXAndWidth: this.findXAndWidth, firstBase: firstBase, fullSeq: fullSeq, lastBase: lastBase, selectHeight: selectHeight, onUnmount: onUnmount }),
             React.createElement(Highlights_1.default, { compYDiff: compYDiff - 3, findXAndWidth: this.findXAndWidthElement, firstBase: firstBase, highlights: highlights, indexYDiff: indexYDiff - 3, inputRef: inputRef, lastBase: lastBase, lineHeight: lineHeight, listenerOnly: false, seqBlockRef: this }),
             React.createElement(Selection_1.default.Edges, { findXAndWidth: this.findXAndWidth, firstBase: firstBase, fullSeq: fullSeq, lastBase: lastBase, selectEdgeHeight: selectEdgeHeight }),
@@ -4151,7 +4140,7 @@ var Index = /** @class */ (function (_super) {
         // of positions for tickInc
         _this.genTicks = function () {
             var _a = _this.props, charWidth = _a.charWidth, findXAndWidth = _a.findXAndWidth, firstBase = _a.firstBase, seq = _a.seq, seqType = _a.seqType, size = _a.size, zoom = _a.zoom;
-            var displayIndexOffset = typeof _this.props.displayIndexOffset === "number" ? _this.props.displayIndexOffset : 0;
+            var indexDisplayOffset = typeof _this.props.indexDisplayOffset === "number" ? Math.max(_this.props.indexDisplayOffset, 0) : 0;
             var seqLength = seq.length;
             // the tally's distance on the x-axis is zoom dependent:
             // (0, 10]: every 50
@@ -4210,7 +4199,7 @@ var Index = /** @class */ (function (_super) {
                 var transText = "translate(".concat(textFromLeft, ", 10)");
                 return (React.createElement(React.Fragment, { key: p },
                     React.createElement("path", { className: "la-vz-index-tick", d: "M 0 0 L 0 7", transform: transTick }),
-                    React.createElement("text", { className: "la-vz-index-tick-label", dominantBaseline: "hanging", fontSize: 12, transform: transText }, p + displayIndexOffset)));
+                    React.createElement("text", { className: "la-vz-index-tick-label", dominantBaseline: "hanging", fontSize: 12, transform: transText }, p + indexDisplayOffset)));
             });
         };
         return _this;

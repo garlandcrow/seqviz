@@ -81,6 +81,9 @@ export interface SeqVizProps {
   /** ranges of sequence to highlight on the viewer */
   highlights?: HighlightProp[];
 
+  /** the offset to add to the start the index of the viewer, default: 0 */
+  indexDisplayOffset?: number;
+
   /** the name of the sequence to show in the middle of the circular viewer */
   name?: string;
 
@@ -135,7 +138,7 @@ export interface SeqVizProps {
   style?: Record<string, unknown>;
 
   /** the subsequence start/end to render */
-  subseq?: { end?: number; start: number };
+  // subseq?: { end?: number; start: number };
 
   /** ranges of sequence that should have amino acid translations shown */
   translations?: { direction?: number; end: number; start: number }[];

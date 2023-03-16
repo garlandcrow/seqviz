@@ -32,13 +32,13 @@ interface SeqBlockProps {
   charWidth: number;
   compSeq: string;
   cutSiteRows: CutSite[];
-  displayIndexOffset?: number;
   elementHeight: number;
   firstBase: number;
   fullSeq: string;
   handleMouseEvent: React.MouseEventHandler<SVGSVGElement>;
   highlights: Highlight[];
   id: string;
+  indexDisplayOffset?: number;
   inputRef: InputRefFunc;
   key: string;
   lineHeight: number;
@@ -220,13 +220,13 @@ export default class SeqBlock extends React.PureComponent<SeqBlockProps> {
       charWidth,
       compSeq,
       cutSiteRows,
-      displayIndexOffset,
       elementHeight,
       firstBase,
       fullSeq,
       handleMouseEvent,
       highlights,
       id,
+      indexDisplayOffset,
       inputRef,
       lineHeight,
       onUnmount,
@@ -311,9 +311,9 @@ export default class SeqBlock extends React.PureComponent<SeqBlockProps> {
         {showIndex && (
           <IndexRow
             charWidth={charWidth}
-            displayIndexOffset={displayIndexOffset}
             findXAndWidth={this.findXAndWidth}
             firstBase={firstBase}
+            indexDisplayOffset={indexDisplayOffset}
             lastBase={lastBase}
             seq={seq}
             seqType={seqType}

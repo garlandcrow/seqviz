@@ -21,13 +21,13 @@ interface SeqBlockProps {
     charWidth: number;
     compSeq: string;
     cutSiteRows: CutSite[];
-    displayIndexOffset?: number;
     elementHeight: number;
     firstBase: number;
     fullSeq: string;
     handleMouseEvent: React.MouseEventHandler<SVGSVGElement>;
     highlights: Highlight[];
     id: string;
+    indexDisplayOffset?: number;
     inputRef: InputRefFunc;
     key: string;
     lineHeight: number;

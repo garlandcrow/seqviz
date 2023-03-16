@@ -28,6 +28,7 @@ const viewerTypeOptions = [
 interface AppState {
   annotations: AnnotationProp[];
   enzymes: any[];
+  indexDisplayOffset?: number;
   name: string;
   primers: boolean;
   search: { query: string };
@@ -38,7 +39,7 @@ interface AppState {
   showIndex: boolean;
   showSelectionMeta: boolean;
   showSidebar: boolean;
-  subseq?: { end?: number; start: number };
+  // subseq?: { end?: number; start: number };
   translations: { end: number; start: number; direction?: 1 | -1 }[];
   viewer: string;
   zoom: number;
@@ -49,21 +50,20 @@ export default class App extends React.Component<any, AppState> {
     annotations: [
       {
         name: "fuck",
-        start: 110,
         end: 140,
+        start: 110,
       },
     ],
     enzymes: ["PstI", "EcoRI", "XbaI", "SpeI"],
+    indexDisplayOffset: 0,
     name: "",
     primers: true,
-    search: {},
     searchResults: {},
     selection: {},
     seq: "",
     showComplement: true,
     showIndex: true,
     showSelectionMeta: false,
-    subseq: { start: 5 },
     showSidebar: false,
     translations: [
       // { end: 630, start: 6, direction: -1 },
@@ -161,13 +161,13 @@ export default class App extends React.Component<any, AppState> {
                   <SeqViz
                     annotations={this.state.annotations}
                     enzymes={this.state.enzymes}
+                    indexDisplayOffset={this.state.indexDisplayOffset}
                     name={this.state.name}
                     search={this.state.search}
                     selection={this.state.selection}
                     seq={this.state.seq}
                     showComplement={this.state.showComplement}
                     showIndex={this.state.showIndex}
-                    subseq={this.state.subseq}
                     translations={this.state.translations}
                     viewer={this.state.viewer as "linear" | "circular"}
                     zoom={{ linear: this.state.zoom }}

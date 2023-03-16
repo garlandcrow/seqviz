@@ -3,9 +3,9 @@ import { SeqType, Size } from "../elements";
 import { FindXAndWidthType } from "./SeqBlock";
 interface IndexProps {
     charWidth: number;
-    displayIndexOffset?: number;
     findXAndWidth: FindXAndWidthType;
     firstBase: number;
+    indexDisplayOffset?: number;
     lastBase: number;
     seq: string;
     seqType: SeqType;

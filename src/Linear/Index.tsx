@@ -5,9 +5,9 @@ import { FindXAndWidthType } from "./SeqBlock";
 
 interface IndexProps {
   charWidth: number;
-  displayIndexOffset?: number;
   findXAndWidth: FindXAndWidthType;
   firstBase: number;
+  indexDisplayOffset?: number;
   lastBase: number;
   seq: string;
   seqType: SeqType;
@@ -26,7 +26,8 @@ export default class Index extends React.PureComponent<IndexProps> {
   // of positions for tickInc
   genTicks = () => {
     const { charWidth, findXAndWidth, firstBase, seq, seqType, size, zoom } = this.props;
-    const displayIndexOffset = typeof this.props.displayIndexOffset === "number" ? this.props.displayIndexOffset : 0;
+    const indexDisplayOffset =
+      typeof this.props.indexDisplayOffset === "number" ? Math.max(this.props.indexDisplayOffset, 0) : 0;
     const seqLength = seq.length;
 
     // the tally's distance on the x-axis is zoom dependent:
@@ -97,7 +98,7 @@ export default class Index extends React.PureComponent<IndexProps> {
         <React.Fragment key={p}>
           <path className="la-vz-index-tick" d="M 0 0 L 0 7" transform={transTick} />
           <text className="la-vz-index-tick-label" dominantBaseline="hanging" fontSize={12} transform={transText}>
-            {p + displayIndexOffset}
+            {p + indexDisplayOffset}
           </text>
         </React.Fragment>
       );
