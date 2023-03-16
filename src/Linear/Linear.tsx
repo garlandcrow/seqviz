@@ -91,7 +91,7 @@ export default class Linear extends React.Component<LinearProps> {
       seq = seq.slice(subseq.start, end);
       compSeq = compSeq.slice(subseq.start, end);
       annotations = annotations
-        .map(a => ({ ...a, end: a.end - subseq.start, start: a.start - subseq.start }))
+        .map(a => ({ ...a, end: a.end - subseq.start - 1, start: a.start - subseq.start - 1 }))
         .filter(a => a.start <= seq.length);
       displayIndexOffset = subseq.start;
     }
