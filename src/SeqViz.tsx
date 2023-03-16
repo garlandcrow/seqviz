@@ -118,6 +118,9 @@ export interface SeqVizProps {
   /** the type of the sequence. If this isn't passed, the type is guessed */
   seqType?: "dna" | "rna" | "aa";
 
+  /** the subsequence start/end to render */
+  subseq?: { start: number; end: number };
+
   /**
    * whether to render the annotation rows
    *

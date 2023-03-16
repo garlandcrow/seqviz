@@ -21,6 +21,7 @@ interface SeqBlockProps {
     charWidth: number;
     compSeq: string;
     cutSiteRows: CutSite[];
+    displayIndexOffset?: number;
     elementHeight: number;
     firstBase: number;
     fullSeq: string;

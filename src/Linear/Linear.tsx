@@ -29,6 +29,7 @@ export interface LinearProps {
   showComplement: boolean;
   showIndex: boolean;
   size: Size;
+  subseq?: { end?: number; start: number };
   translations: Range[];
   zoom: { linear: number };
 }
@@ -61,9 +62,9 @@ export default class Linear extends React.Component<LinearProps> {
    */
   render() {
     const {
-      annotations,
+      annotations: annotationsProp,
       bpsPerBlock,
-      compSeq,
+      compSeq: compSeqProp,
       cutSites,
       elementHeight,
       highlights,
@@ -71,14 +72,29 @@ export default class Linear extends React.Component<LinearProps> {
       onAnnotationStartHeightsCalculated,
       onUnmount,
       search,
-      seq,
+      seq: seqProp,
       seqType,
       showComplement,
       showIndex,
       size,
+      subseq,
       translations,
       zoom,
     } = this.props;
+
+    let compSeq = compSeqProp;
+    let seq = seqProp;
+    let annotations = annotationsProp;
+    let displayIndexOffset = 0;
+    if (typeof subseq !== "undefined") {
+      const end = typeof subseq.end !== "undefined" ? subseq.end : seq.length;
+      seq = seq.slice(subseq.start, end);
+      compSeq = compSeq.slice(subseq.start, end);
+      annotations = annotations
+        .map(a => ({ ...a, end: a.end - subseq.start, start: a.start - subseq.start }))
+        .filter(a => a.start <= seq.length);
+      displayIndexOffset = subseq.start;
+    }
 
     // un-official definition for being zoomed in. Being over 10 seems like a decent cut-off
     const zoomed = zoom.linear > 10;
@@ -194,6 +210,7 @@ export default class Linear extends React.Component<LinearProps> {
           charWidth={this.props.charWidth}
           compSeq={compSeqs[i]}
           cutSiteRows={cutSiteRows[i]}
+          displayIndexOffset={displayIndexOffset}
           elementHeight={elementHeight}
           firstBase={firstBase}
           fullSeq={seq}

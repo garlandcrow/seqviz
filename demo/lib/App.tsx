@@ -38,6 +38,7 @@ interface AppState {
   showIndex: boolean;
   showSelectionMeta: boolean;
   showSidebar: boolean;
+  subseq?: { end?: number; start: number };
   translations: { end: number; start: number; direction?: 1 | -1 }[];
   viewer: string;
   zoom: number;
@@ -45,30 +46,40 @@ interface AppState {
 
 export default class App extends React.Component<any, AppState> {
   state: AppState = {
-    annotations: [],
+    annotations: [
+      {
+        name: "fuck",
+        start: 110,
+        end: 140,
+      },
+    ],
     enzymes: ["PstI", "EcoRI", "XbaI", "SpeI"],
     name: "",
     primers: true,
-    search: { query: "ttnnnaat" },
+    search: {},
     searchResults: {},
     selection: {},
     seq: "",
     showComplement: true,
     showIndex: true,
     showSelectionMeta: false,
+    subseq: { start: 5 },
     showSidebar: false,
     translations: [
-      { end: 630, start: 6, direction: -1 },
-      { end: 1147, start: 736 },
-      { end: 1885, start: 1165 },
+      // { end: 630, start: 6, direction: -1 },
+      // { end: 1147, start: 736 },
+      // { end: 1885, start: 1165 },
     ],
-    viewer: "",
+    viewer: "linear",
     zoom: 50,
   };
 
   componentDidMount = async () => {
     const seq = await seqparse(file);
-    this.setState({ annotations: seq.annotations, name: seq.name, seq: seq.seq });
+    this.setState({
+      name: seq.name,
+      seq: seq.seq,
+    });
   };
 
   toggleSidebar = () => {
@@ -156,6 +167,7 @@ export default class App extends React.Component<any, AppState> {
                     seq={this.state.seq}
                     showComplement={this.state.showComplement}
                     showIndex={this.state.showIndex}
+                    subseq={this.state.subseq}
                     translations={this.state.translations}
                     viewer={this.state.viewer as "linear" | "circular"}
                     zoom={{ linear: this.state.zoom }}

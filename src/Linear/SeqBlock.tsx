@@ -32,6 +32,7 @@ interface SeqBlockProps {
   charWidth: number;
   compSeq: string;
   cutSiteRows: CutSite[];
+  displayIndexOffset?: number;
   elementHeight: number;
   firstBase: number;
   fullSeq: string;
@@ -219,6 +220,7 @@ export default class SeqBlock extends React.PureComponent<SeqBlockProps> {
       charWidth,
       compSeq,
       cutSiteRows,
+      displayIndexOffset,
       elementHeight,
       firstBase,
       fullSeq,
@@ -309,6 +311,7 @@ export default class SeqBlock extends React.PureComponent<SeqBlockProps> {
         {showIndex && (
           <IndexRow
             charWidth={charWidth}
+            displayIndexOffset={displayIndexOffset}
             findXAndWidth={this.findXAndWidth}
             firstBase={firstBase}
             lastBase={lastBase}

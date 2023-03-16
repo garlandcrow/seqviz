@@ -26,6 +26,10 @@ export interface LinearProps {
     showComplement: boolean;
     showIndex: boolean;
     size: Size;
+    subseq?: {
+        end?: number;
+        start: number;
+    };
     translations: Range[];
     zoom: {
         linear: number;
